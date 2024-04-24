@@ -15,11 +15,16 @@
     <title>our fancy app</title>
   </head>
   <body>
+    <!-- container of form  -->
     <div class="d-flex justify-content-center align-items-center vh-100">
-      <div class="container" style="max-width: 400px">
+      <div
+        class="container shadow-lg border-primary p-5 rounded"
+        style="max-width: 400px"
+      >
         <h1 class="text-secondary fst-italic text-center mb-4">Login</h1>
         <!-- dynamically added by js  -->
         <div class="errorMessage"></div>
+        <!-- form -->
         <form class="form needs-validation" novalidate>
           <div class="mb-3">
             <label for="username" class="form-label">Username</label>
@@ -45,7 +50,7 @@
             />
             <i
               class="fa-solid fa-eye position-absolute"
-              style="top: 60%; right: 2%"
+              style="top: 60%; right: 2%; color: lightgray"
               ;
               id="showPassword"
             ></i>
@@ -67,6 +72,10 @@
           </div>
 
           <button type="submit" class="btn btn-secondary w-100">Submit</button>
+          <!-- sign up  -->
+          <div class="d-flex justify-content-start">
+            <a href="#" class="btn btn-secondary w-100 mt-2">Sign Up</a>
+          </div>
         </form>
       </div>
     </div>
