@@ -28,13 +28,15 @@
         <form action="#" method="post" ="form needs-validation" novalidate>
           <div class="mb-3">
             <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" required />
+            <i class="fa fa-user"></i>
+            <input type="text" class="username form-control" required />
             <div class="valid-feedback">Looks Good</div>
             <div class="invalid-feedback">Please pick a username</div>
           </div>
 
           <div class="mb-3">
             <label for="email" class="form-label">Email Address</label>
+            <i class="fa fa-envelope"></i>
             <input type="email" class="form-control" id="email" required />
             <div class="valid-feedback">Looks Good</div>
             <div class="invalid-feedback">Please enter a valid email</div>
@@ -42,6 +44,7 @@
 
           <div class="mb-3 position-relative">
             <label for="password" class="form-label">Password</label>
+            <i class="fa fa-lock"></i>
             <input
               type="password"
               class="form-control"
