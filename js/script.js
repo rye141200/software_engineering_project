@@ -6,7 +6,6 @@ const form = document.querySelector("form");
 const errorMessage = document.querySelector(".errorMessage");
 
 // Get the input elements by their IDs
-const username = document.getElementById("username");
 const email = document.getElementById("email");
 const password = document.getElementById("password");
 const showPassword = document.getElementById("showPassword");
@@ -46,15 +45,6 @@ form.addEventListener("submit", (e) => {
   let errorMessages = [];
 
   // Validate the username
-  const containSymbol = validateUserName(username.value);
-
-  if (!containSymbol) {
-    errorMessages.push(
-      `Username must contain at least one of the following symbols: ${symbols.join(
-        ", "
-      )}`
-    );
-  }
 
   // Validate the email
   if (!email.value.endsWith("@gmail.com")) {
