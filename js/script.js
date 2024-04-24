@@ -1,3 +1,4 @@
+// --- login page ---
 // Get the first form on the page
 const form = document.querySelector("form");
 
@@ -81,7 +82,6 @@ form.addEventListener("submit", (e) => {
 });
 
 showPassword.addEventListener("click", function () {
-  showPassword.classList.toggle("fa-eye-slash");
   const type =
     password.getAttribute("type") === "password" ? "text" : "password";
   password.setAttribute("type", type);
