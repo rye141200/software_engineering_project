@@ -1,0 +1,7 @@
+.container-big {
+  background-image: url("../imgs/login-image.jpg");
+}
+
+#showPassword {
+  color: lightgray;
+}

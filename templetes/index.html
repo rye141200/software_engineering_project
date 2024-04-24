@@ -6,121 +6,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./../assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="./../css/bootstrap.css" />
-    <link rel="stylesheet" href="./../css/style.css" />
+    <link rel="stylesheet" href="./../css/styles.css" />
     <link rel="stylesheet" href="./../css/fontawesome.css" />
-    <title>Bootstrap Sandbox | Form Validation</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <title>our fancy app</title>
   </head>
   <body>
-    <div class="container">
-      <h1 class="d-flex justify-content-center mb-3">login</h1>
-      <form action="/user" method="post" class="needs-validation" novalidate>
-        <div class="mb-3">
-          <label for="username" class="form-label">Username</label>
-          <input type="text" class="form-control" id="username" required />
-          <div class="valid-feedback">Looks Good</div>
-          <div class="invalid-feedback">Please pick a username</div>
-        </div>
-        <div class="mb-3">
-          <label for="email" class="form-label">Email address</label>
-          <input type="email" class="form-control" id="email" required />
-          <div class="valid-feedback">Looks Good</div>
-          <div class="invalid-feedback">Please pick a valid email</div>
-        </div>
-        <div class="mb-3">
-          <label for="city" class="form-label">password</label>
-          <input type="text" class="form-control" id="pass" required />
-          <div class="valid-feedback">Looks Good</div>
-          <div class="invalid-feedback">Please pick a strong password</div>
-        </div>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+      <div class="container" style="max-width: 400px">
+        <h1 class="text-secondary fst-italic text-center mb-4">Login</h1>
+        <!-- dynamically added by js  -->
+        <div class="errorMessage"></div>
+        <form class="form needs-validation" novalidate>
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <input type="text" class="form-control" id="username" required />
+            <div class="valid-feedback">Looks Good</div>
+            <div class="invalid-feedback">Please pick a username</div>
+          </div>
 
-        <div class="mb-3">
-          <div class="form-check">
+          <div class="mb-3">
+            <label for="email" class="form-label">Email Address</label>
+            <input type="email" class="form-control" id="email" required />
+            <div class="valid-feedback">Looks Good</div>
+            <div class="invalid-feedback">Please enter a valid email</div>
+          </div>
+
+          <div class="mb-3 position-relative">
+            <label for="password" class="form-label">Password</label>
             <input
-              class="form-check-input"
+              type="password"
+              class="form-control"
+              id="password"
+              required
+            />
+            <i
+              class="fa-solid fa-eye position-absolute"
+              style="top: 60%; right: 2%"
+              ;
+              id="showPassword"
+            ></i>
+            <div class="valid-feedback">Looks Good</div>
+            <div class="invalid-feedback">Please enter a strong password</div>
+          </div>
+
+          <div class="mb-3 form-check">
+            <input
               type="checkbox"
-              value=""
+              class="form-check-input"
               id="invalidCheck"
               required
             />
-            <label class="form-check-label" for="invalidCheck">
-              Agree to terms and conditions
-            </label>
+            <label class="form-check-label" for="invalidCheck"
+              >Agree to terms and conditions</label
+            >
             <div class="invalid-feedback">You must agree to the terms</div>
           </div>
-        </div>
 
-        <input type="submit" class="btn btn-primary" value="Submit" />
-      </form>
-
-      <button class="btn btn-primary">ahmed</button>
-      <!-- Don't go past here -->
+          <button type="submit" class="btn btn-secondary w-100">Submit</button>
+        </form>
+      </div>
     </div>
-    <div style="margin-top: 350px"></div>
-
     <script src="../js/script.js"></script>
     <script src="./../js/bootstrap.bundle.min.js"></script>
-    <script>
-      const form = document.querySelector(".needs-validation");
-      const email = document.getElementById("email");
-      const username = document.getElementById("username");
-      const password = document.getElementById("pass");
-
-      // Function to check email
-      const validateEmail = () => {
-        const emailValue = email.value;
-        const emailPattern = /^[a-zA-Z0-9._%+-]+@gmail\.com$/;
-        if (!emailPattern.test(emailValue)) {
-          email.setCustomValidity(
-            "Please enter an email address that ends with @gmail.com"
-          );
-          email.reportValidity();
-        } else {
-          email.setCustomValidity("");
-        }
-      };
-
-      // Function to check username
-      const validateUsername = () => {
-        const usernameValue = username.value;
-        const usernamePattern = /^(?=.*[A-Z])(?=.*[_$]).+$/;
-        if (!usernamePattern.test(usernameValue)) {
-          username.setCustomValidity(
-            "Username must contain at least one uppercase letter and one special character (_ or $)"
-          );
-          username.reportValidity();
-        } else {
-          username.setCustomValidity("");
-        }
-      };
-
-      // Function to check password
-      const validatePassword = () => {
-        const passwordValue = password.value;
-        const passwordPattern = /^(?=.*[a-zA-Z])(?=.*\d).+$/; // Regular expression for letters and numbers
-        if (!passwordPattern.test(passwordValue)) {
-          password.setCustomValidity(
-            "Password must contain both letters and numbers"
-          );
-          password.reportValidity();
-        } else {
-          password.setCustomValidity("");
-        }
-      };
-
-      form.addEventListener("submit", (e) => {
-        // Validate email, username, and password
-        validateEmail();
-        validateUsername();
-        validatePassword();
-
-        if (!form.checkValidity()) {
-          e.preventDefault();
-        } else {
-          alert("success");
-        }
-
-        form.classList.add("was-validated");
-      });
-    </script>
+    <script src="../js/script.js"></script>
   </body>
 </html>
