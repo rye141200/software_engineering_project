@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/bootstrap.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <link rel="stylesheet" href="./css/fontawesome.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <title>Bootstrap Sandbox | Cards</title>
+  </head>
+  <body>
+    <div class="container d-flex justify-content-center">
+      <div class="card shadow-md" style="width: 20rem; background-color: azure">
+        <!-- Add the image at the top of the card -->
+        <img
+          src="https://picsum.photos/200"
+          class="card-img-top img-hover"
+          alt="Trip Image"
+          style="
+            height: 150px;
+            object-fit: cover;
+            border-bottom: 1px solid #ddd;
+          "
+        />
+
+        <div class="card-body text-bg-light">
+          <p class="card-text">
+            <i class="fas fa-bus"></i> <strong>Transportation:</strong> Bus
+          </p>
+          <p class="card-text">
+            <i class="fas fa-calendar"></i> <strong>Date:</strong> April 28,
+            2024
+          </p>
+          <p class="card-text">
+            <i class="fas fa-dollar-sign"></i> <strong>Price:</strong> $120
+          </p>
+          <p class="card-text">
+            <i class="fas fa-users"></i> <strong>Going:</strong> 12
+          </p>
+          <p class="card-text">
+            <i class="fas fa-chair"></i> <strong>Seats Left:</strong> 8
+          </p>
+          <div class="d-flex justify-content-center">
+            <a href="#" class="btn btn-primary btn-custom">
+              <i class="fas fa-ticket-alt"></i> Book
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -24,7 +24,7 @@ form.addEventListener("submit", (e) => {
 
   // Validate the email
   if (!email.value.endsWith("@gmail.com")) {
-    alert("Please enter a valid email address ending with @gmail.com.");
+    alert("Please enter a valid email address ending with @gmail.com");
   }
 
   // Validate the password
