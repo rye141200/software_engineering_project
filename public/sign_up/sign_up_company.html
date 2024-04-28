@@ -10,10 +10,10 @@
     />
 
     />
-    <link rel="stylesheet" href="./css/styles.css" />
-    <link rel="stylesheet" href="./css/bootstrap.css" />
-    <link rel="stylesheet" href="./css/fontawesome.css" />
-    <link rel="stylesheet" href="./webfonts/" />
+    <link rel="stylesheet" href="../css/styles.css" />
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <link rel="stylesheet" href="../css/fontawesome.css" />
+    <link rel="stylesheet" href="../webfonts/" />
     <title>Our Fancy App</title>
   </head>
   <body style="background: linear-gradient(to right, #f7f7f7, #e8e8e8)">
@@ -30,37 +30,30 @@
           class="alert alert-danger errorMessage"
           style="display: none"
         ></div>
-        <!--  -->
-        <!-- Formaction="/sign_up" method="POST" -->
-        <form class="form" action="/sign_up_user" method="POST">
-          <!-- Username -->
+
+        <!-- Form -->
+        <form class="form_sign_up" action="/sign_up/company" method="POST">
+          <!-- company name -->
           <div class="mb-3">
-            <label for="username" class="form-label"
-              >Username <i class="fa fa-user"></i
+            <label for="companyname" class="form-label"
+              >company name <i class="fa fa-building"></i
             ></label>
             <input
               type="text"
               class="form-control"
-              id="username"
-              name="username"
+              name="companyname"
               required
             />
             <div class="valid-feedback">Looks Good</div>
             <div class="invalid-feedback">Please choose a username</div>
           </div>
 
-          <!-- City -->
+          <!-- location -->
           <div class="mb-3">
-            <label for="city" class="form-label"
-              >City <i class="fa fa-city"></i
+            <label for="location" class="form-label"
+              >location <i class="fa fa-location"></i
             ></label>
-            <input
-              type="text"
-              name="city"
-              class="form-control"
-              id="city"
-              required
-            />
+            <input type="text" name="location" class="form-control" required />
           </div>
 
           <!-- Email -->
@@ -68,13 +61,7 @@
             <label for="email" class="form-label"
               >Email Address <i class="fa fa-envelope"></i
             ></label>
-            <input
-              type="email"
-              class="form-control"
-              name="email"
-              id="email"
-              required
-            />
+            <input type="email" class="form-control" name="email" required />
           </div>
 
           <!-- Password -->
@@ -108,13 +95,18 @@
             <label for="confirmPassword" class="form-label"
               >Confirm Password <i class="fa fa-lock"></i
             ></label>
-            <input
-              type="password"
-              class="form-control"
-              name="confirmPassword"
-            />
+            <input type="password" class="form-control" id="confirmPassword" />
             <div class="valid-feedback">Looks Good</div>
             <div class="invalid-feedback">Please confirm your password</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="phone" class="form-label"
+              >phone <i class="fa fa-phone"></i
+            ></label>
+            <input type="number" class="form-control" name="phone" />
+            <div class="valid-feedback">Looks Good</div>
+            <div class="invalid-feedback">Please confirm your phone</div>
           </div>
 
           <!-- Dropdown
@@ -145,17 +137,17 @@
     <!-- <script src="./js/script.js"></script> -->
     <!-- <script src="./js/bootstrap.bundle.min.js"></script> -->
     <script>
-      const form = document.querySelector('form');
-      form.addEventListener('submit', async (event) => {
+      const form_sign_up = document.querySelector('.form_sign_up');
+      form_sign_up.addEventListener('submit', async (event) => {
         // Prevent default form submission
         event.preventDefault();
-        const formData = new FormData(form);
+        const formData = new FormData(form_sign_up);
         const data = Object.fromEntries(formData);
         // Collect form data and send POST request
         // Same as your existing code
 
         try {
-          const response = await fetch('/sign_up_user', {
+          const response = await fetch('/sign_up/company', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -167,7 +159,7 @@
             // Form submitted successfully
             // Redirect the user to a new page
             alert('Form submitted successfully!');
-            window.location.href = '/sign_up_test';
+            window.location.href = '/';
           } else {
             // Handle non-successful response
             const errorData = await response.json();

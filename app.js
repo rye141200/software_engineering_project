@@ -10,23 +10,18 @@ app.use(express.json()); // For parsing JSON
 app.use(express.urlencoded({ extended: true })); // For parsing form data
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/index.html');
+  res.sendFile(__dirname + '/public/sign_up/index.html');
   console.log(req.body);
 });
-app.get('/start_sign_up_user', (req, res) => {
-  res.redirect('/sign_up_user');
+
+app.get('/sign_up/user', (req, res) => {
+  res.sendFile(__dirname + '/public/sign_up/sign_up.html');
 });
-app.get('/start_sign_up_company', (req, res) => {
-  res.redirect('/sign_up_company');
-});
-app.get('/sign_up_user', (req, res) => {
-  res.sendFile(__dirname + '/public/sign_up.html');
-});
-app.get('/sign_up_company', (req, res) => {
-  res.sendFile(__dirname + '/public/sign_up_company.html');
+app.get('/sign_up/company', (req, res) => {
+  res.sendFile(__dirname + '/public/sign_up/sign_up_company.html');
 });
 
-app.post('/sign_up_user', (req, res) => {
+app.post('/sign_up/user', (req, res) => {
   // Destructure request body
   const name = req.body.username;
   const email = req.body.email;
@@ -51,14 +46,16 @@ app.post('/sign_up_user', (req, res) => {
   // Create a data object
   const data = { name, password, email, city };
   data.role = 'user';
-  res.status(200).json({
-    message: 'success',
-    data: data,
-  });
-  // .redirect('/sign_up_test');
+  res
+    .status(200)
+    .json({
+      message: 'success',
+      data: data,
+    })
+    .redirect('/sign_up_test');
 });
 
-app.post('/sign_up_company', (req, res) => {
+app.post('/sign_up/company', (req, res) => {
   // Destructure request body
   const name = req.body.companyname;
   const email = req.body.email;
@@ -86,11 +83,13 @@ app.post('/sign_up_company', (req, res) => {
   data.role = 'company';
   // console.log(data);
 
-  res.status(200).json({
-    message: 'success',
-    data: data,
-  });
-  // .redirect('/sign_up_test');
+  res
+    .status(200)
+    .json({
+      message: 'success',
+      data: data,
+    })
+    .redirect('/');
 });
 
 app.get('/sign_up_test', (req, res) => {
