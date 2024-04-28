@@ -31,9 +31,9 @@
           style="display: none"
         ></div>
 
-        <!-- Formaction="/sign_up" method="POST" -->
-        <form class="form">
-          <!-- Username -->
+        <!-- Form -->
+        <form class="form_sign_up" action="/sign_up_company" method="POST">
+          <!-- company name -->
           <div class="mb-3">
             <label for="companyname" class="form-label"
               >company name <i class="fa fa-building"></i
@@ -136,30 +136,18 @@
     <!-- JavaScript files -->
     <!-- <script src="./js/script.js"></script> -->
     <!-- <script src="./js/bootstrap.bundle.min.js"></script> -->
-    <!-- <script>
-      // Get the form element
-      const form = document.querySelector('.form');
-
-      // Add an event listener to handle form submission
-      form.addEventListener('submit', async (event) => {
+    <script>
+      const form_sign_up = document.querySelector('.form_sign_up');
+      form_sign_up.addEventListener('submit', async (event) => {
         // Prevent default form submission
         event.preventDefault();
-
-        // Correctly select the dropdown element
-        let selectRole = document.querySelector('.form-select').selectedValue;
-
-        console.log(`Selected role: ${selectRole}`);
-
-        // Collect form data
-        const formData = new FormData(form);
+        const formData = new FormData(form_sign_up);
         const data = Object.fromEntries(formData);
+        // Collect form data and send POST request
+        // Same as your existing code
 
-        // Add the selected value to the data object
-        data.role = selectRole;
-        console.log(`Selected role: ${data.role}`);
-        // Send the data using a POST request
         try {
-          const request = await fetch('/sign_up', {
+          const response = await fetch('/sign_up_company', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -167,13 +155,15 @@
             body: JSON.stringify(data),
           });
 
-          // Check for response
-          if (request.ok) {
-            // Handle successful response
-            console.log('Form submitted successfully!');
+          if (response.ok) {
+            // Form submitted successfully
+            // Redirect the user to a new page
+            alert('Form submitted successfully!');
+            window.location.href = '/sign_up_test';
           } else {
             // Handle non-successful response
-            console.error('Form submission failed:', request.statusText);
+            const errorData = await response.json();
+            alert('Form submission failed: ' + errorData.error);
           }
         } catch (error) {
           console.error('An error occurred while submitting the form:', error);
@@ -182,6 +172,6 @@
           );
         }
       });
-    </script> -->
+    </script>
   </body>
 </html>

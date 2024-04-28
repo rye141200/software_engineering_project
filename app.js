@@ -2,7 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const app = express();
 
-// app.use(morgan('dev'));
+app.use(morgan('dev'));
 app.use(express.static(__dirname + '/public'));
 
 // when the user post data on sign_up page
@@ -31,8 +31,6 @@ app.post('/sign_up_user', (req, res) => {
   const name = req.body.username;
   const email = req.body.email;
   const city = req.body.city;
-  const role = req.body.role;
-  console.log('role is ' + role);
   const password = req.body.password;
   const missingFields = [];
 
@@ -45,25 +43,27 @@ app.post('/sign_up_user', (req, res) => {
   // If there are any missing fields, respond with a 400 status and specify which fields are missing
   if (missingFields.length > 0) {
     return res.status(400).json({
-      status: 'failed',
+      message: 'failed',
       error: `Missing required fields: ${missingFields.join(', ')}`,
     });
   }
 
   // Create a data object
-  const data = { name, password, email, city, role };
-  console.log(data);
-
-  res.status(200).redirect('/sign_up_test');
+  const data = { name, password, email, city };
+  data.role = 'user';
+  res.status(200).json({
+    message: 'success',
+    data: data,
+  });
+  // .redirect('/sign_up_test');
 });
 
 app.post('/sign_up_company', (req, res) => {
   // Destructure request body
-  const name = req.body.username;
+  const name = req.body.companyname;
   const email = req.body.email;
-  const city = req.body.city;
+  const location = req.body.location;
   const phone = req.body.phone;
-  console.log('role is ' + role);
   const password = req.body.password;
   const missingFields = [];
 
@@ -71,7 +71,7 @@ app.post('/sign_up_company', (req, res) => {
   if (!name) missingFields.push('name');
   if (!password) missingFields.push('password');
   if (!email) missingFields.push('email');
-  if (!city) missingFields.push('city');
+  if (!phone) missingFields.push('phone');
 
   // If there are any missing fields, respond with a 400 status and specify which fields are missing
   if (missingFields.length > 0) {
@@ -82,10 +82,15 @@ app.post('/sign_up_company', (req, res) => {
   }
 
   // Create a data object
-  const data = { name, password, email, city, role };
-  console.log(data);
+  const data = { name, password, email, location, phone };
+  data.role = 'company';
+  // console.log(data);
 
-  res.status(200).redirect('/sign_up_test');
+  res.status(200).json({
+    message: 'success',
+    data: data,
+  });
+  // .redirect('/sign_up_test');
 });
 
 app.get('/sign_up_test', (req, res) => {

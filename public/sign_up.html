@@ -30,9 +30,9 @@
           class="alert alert-danger errorMessage"
           style="display: none"
         ></div>
-
+        <!--  -->
         <!-- Formaction="/sign_up" method="POST" -->
-        <form class="form">
+        <form class="form" action="/sign_up_user" method="POST">
           <!-- Username -->
           <div class="mb-3">
             <label for="username" class="form-label"
@@ -108,7 +108,11 @@
             <label for="confirmPassword" class="form-label"
               >Confirm Password <i class="fa fa-lock"></i
             ></label>
-            <input type="password" class="form-control" id="confirmPassword" />
+            <input
+              type="password"
+              class="form-control"
+              name="confirmPassword"
+            />
             <div class="valid-feedback">Looks Good</div>
             <div class="invalid-feedback">Please confirm your password</div>
           </div>
@@ -140,30 +144,18 @@
     <!-- JavaScript files -->
     <!-- <script src="./js/script.js"></script> -->
     <!-- <script src="./js/bootstrap.bundle.min.js"></script> -->
-    <!-- <script>
-      // Get the form element
-      const form = document.querySelector('.form');
-
-      // Add an event listener to handle form submission
+    <script>
+      const form = document.querySelector('form');
       form.addEventListener('submit', async (event) => {
         // Prevent default form submission
         event.preventDefault();
-
-        // Correctly select the dropdown element
-        let selectRole = document.querySelector('.form-select').selectedValue;
-
-        console.log(`Selected role: ${selectRole}`);
-
-        // Collect form data
         const formData = new FormData(form);
         const data = Object.fromEntries(formData);
+        // Collect form data and send POST request
+        // Same as your existing code
 
-        // Add the selected value to the data object
-        data.role = selectRole;
-        console.log(`Selected role: ${data.role}`);
-        // Send the data using a POST request
         try {
-          const request = await fetch('/sign_up', {
+          const response = await fetch('/sign_up_user', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -171,13 +163,15 @@
             body: JSON.stringify(data),
           });
 
-          // Check for response
-          if (request.ok) {
-            // Handle successful response
-            console.log('Form submitted successfully!');
+          if (response.ok) {
+            // Form submitted successfully
+            // Redirect the user to a new page
+            alert('Form submitted successfully!');
+            window.location.href = '/sign_up_test';
           } else {
             // Handle non-successful response
-            console.error('Form submission failed:', request.statusText);
+            const errorData = await response.json();
+            alert('Form submission failed: ' + errorData.error);
           }
         } catch (error) {
           console.error('An error occurred while submitting the form:', error);
@@ -186,6 +180,6 @@
           );
         }
       });
-    </script> -->
+    </script>
   </body>
 </html>
