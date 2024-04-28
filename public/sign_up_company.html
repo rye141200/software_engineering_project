@@ -35,32 +35,25 @@
         <form class="form">
           <!-- Username -->
           <div class="mb-3">
-            <label for="username" class="form-label"
-              >Username <i class="fa fa-user"></i
+            <label for="companyname" class="form-label"
+              >company name <i class="fa fa-building"></i
             ></label>
             <input
               type="text"
               class="form-control"
-              id="username"
-              name="username"
+              name="companyname"
               required
             />
             <div class="valid-feedback">Looks Good</div>
             <div class="invalid-feedback">Please choose a username</div>
           </div>
 
-          <!-- City -->
+          <!-- location -->
           <div class="mb-3">
-            <label for="city" class="form-label"
-              >City <i class="fa fa-city"></i
+            <label for="location" class="form-label"
+              >location <i class="fa fa-location"></i
             ></label>
-            <input
-              type="text"
-              name="city"
-              class="form-control"
-              id="city"
-              required
-            />
+            <input type="text" name="location" class="form-control" required />
           </div>
 
           <!-- Email -->
@@ -68,13 +61,7 @@
             <label for="email" class="form-label"
               >Email Address <i class="fa fa-envelope"></i
             ></label>
-            <input
-              type="email"
-              class="form-control"
-              name="email"
-              id="email"
-              required
-            />
+            <input type="email" class="form-control" name="email" required />
           </div>
 
           <!-- Password -->
@@ -111,6 +98,15 @@
             <input type="password" class="form-control" id="confirmPassword" />
             <div class="valid-feedback">Looks Good</div>
             <div class="invalid-feedback">Please confirm your password</div>
+          </div>
+
+          <div class="mb-3">
+            <label for="phone" class="form-label"
+              >phone <i class="fa fa-phone"></i
+            ></label>
+            <input type="number" class="form-control" name="phone" />
+            <div class="valid-feedback">Looks Good</div>
+            <div class="invalid-feedback">Please confirm your phone</div>
           </div>
 
           <!-- Dropdown
