@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Home Page</title>
+    <link rel="stylesheet" href="css/UserHomePageStyle.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300..700&family=Platypi:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
+</head>
+
+
+<body>
+
+    
+    <!----------------Header----------------->
+    <header>
+
+        <!--Website Name-->
+        <h1 id="website-name">✈ Travel Planner</h1>
+
+        <!--Menu-->
+        <span class="menu">&equiv;</span>
+
+        <div class="menu-options">
+
+            <a class="menu-link" href="">Profile</a>
+            <hr>
+            <a class="menu-link" href="">Plans</a>
+            <hr>
+            <a class="menu-link" href="">History</a>
+            <hr>
+            <a class="menu-link" href="">Sign out</a>      
+                          
+        </div>
+        
+
+        <!--Home Page Profile Picture and Links-->
+        <figure class="profile-picture-and-userid">
+            <img class="profile-picture" src="https://via.placeholder.com/200/FFE" alt="Not found">
+            <figcaption class="userid-under-picture">@UserID</figcaption>
+        </figure>
+        <!-------------------------------------->
+
+        <!----------------Search---------------->
+        <form class="search" action="" method="post">
+
+            <div class="search-box-and-btn">
+                <input id="search-box" type="search" name="search" placeholder=" Company or Trip 🔎" minlength="2" required>
+                <input id="search-btn" type="submit" value="Search">
+            </div>
+
+            <div class="search-for">
+                <input id="search for trip" type="radio" name="filter" value="trip" checked>
+                <label for="search for trip">Trip</label>
+                <input id="search for company" type="radio" name="filter" value="company">
+                <label for="search for company">Company</label>
+            </div>
+
+        </form>
+        <!-------------------------------------->
+
+    </header>
+    <!-------------------------------------->
+
+
+    <!--------------Main Body--------------->
+    <main>
+
+        <!--Sample of the available trips-->
+        <section class="trips">
+            <h2 class="section-title">Some Trips</h2>
+            <br>
+            <div class="card" tabindex="0"> Trip #1 </div>
+            <div class="card" tabindex="0"> Trip #2 </div>
+            <div class="card" tabindex="0"> Trip #3 </div>
+            <div class="card" tabindex="0"> Trip #4 </div>
+        </section>
+
+        <!--Sample of the available companies-->
+        <section class="companies">
+            <h2 class="section-title">Some Companies</h2>
+            <br>
+            <div class="card" tabindex="0"> Company #1 </div>
+            <div class="card" tabindex="0"> Company #2 </div>
+            <div class="card" tabindex="0"> Company #3 </div>
+            <div class="card" tabindex="0"> Company #4 </div>
+        </section>
+
+    </main>
+    <!-------------------------------------->
+
+
+</body>
+
+</html>
