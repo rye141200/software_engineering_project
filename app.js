@@ -1,100 +1,76 @@
 const express = require('express');
 const morgan = require('morgan');
 const app = express();
-
+const cors = require('cors');
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const authHandler = require('./Controllers/authenticationHandler');
+const bookingHandler = require('./Controllers/bookingHandler');
+const bodyParser = require('body-parser');
+require('dotenv').config({ path: './config.env' });
+//!Middlewares
 app.use(morgan('dev'));
-app.use(express.static(__dirname + '/public'));
-
+app.set('view engine', 'ejs');
+app.set('views', `${__dirname}/public/`);
+app.use(express.static(`${__dirname}/public/`));
 // when the user post data on sign_up page
-app.use(express.json()); // For parsing JSON
-app.use(express.urlencoded({ extended: true })); // For parsing form data
+app.use(
+  express.urlencoded({
+    limit: '500mb',
+    parameterLimit: 10,
+    extended: true,
+  }),
+);
+app.post(
+  '/webhook-checkout',
+  bodyParser.raw({ type: 'application/json' }),
+  bookingHandler.webhookCheckout,
+);
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/public/sign_up/index.html');
-  console.log(req.body);
+app.use(express.json());
+app.use(cors());
+app.use(cookieParser());
+
+//! Routes
+const loginRouter = require('./Routes/loginRouter');
+const signupRouter = require('./Routes/signupRouter');
+const homeRouter = require('./Routes/homeRouter');
+const tourRouter = require('./Routes/tourRouter');
+const newTourRouter = require('./Routes/newTourRouter');
+const bookingRouter = require('./Routes/bookingRouter');
+const myToursRouter = require('./Routes/companyToursRouter');
+const myBookingsHandler = require('./Routes/myBookingsRouter');
+app.get('/', authHandler.isAuth, (req, res) => {
+  res.redirect('/home');
 });
 
-app.get('/sign_up/user', (req, res) => {
-  res.sendFile(__dirname + '/public/sign_up/sign_up.html');
-});
-app.get('/sign_up/company', (req, res) => {
-  res.sendFile(__dirname + '/public/sign_up/sign_up_company.html');
-});
+// app.use('/login', loginRouter);
+// app.use('/signup', signupRouter);
+// app.use('/home', homeRouter);
+// app.use('/tours', tourRouter);
+// app.use('/newTour', newTourRouter);
+// app.use('/book', bookingRouter);
+// app.use('/myTours', myToursRouter);
+// app.use('/myBooking', myBookingsHandler);
 
-app.post('/sign_up/user', (req, res) => {
-  // Destructure request body
-  const name = req.body.username;
-  const email = req.body.email;
-  const city = req.body.city;
-  const password = req.body.password;
-  const missingFields = [];
+app.use('/login', loginRouter);
+app.use('/signup', signupRouter);
+app.use('/home', homeRouter);
+app.use('/tours', tourRouter);
+app.use('/new-tour', newTourRouter);
+app.use('/book', bookingRouter);
+app.use('/my-tours', myToursRouter);
+app.use('/my-bookings', myBookingsHandler);
 
-  // Check for each required field and add to the array if missing
-  if (!name) missingFields.push('name');
-  if (!password) missingFields.push('password');
-  if (!email) missingFields.push('email');
-  if (!city) missingFields.push('city');
-
-  // If there are any missing fields, respond with a 400 status and specify which fields are missing
-  if (missingFields.length > 0) {
-    return res.status(400).json({
-      message: 'failed',
-      error: `Missing required fields: ${missingFields.join(', ')}`,
-    });
+app.get('/logout', authHandler.isAuth, (req, res) => {
+  try {
+    const loggedInUser = jwt.verify(req.cookies.jwt, process.env.JWT_SECRET);
+    if (loggedInUser) {
+      res.clearCookie('jwt');
+      return res.redirect('/');
+    }
+  } catch (err) {
+    return res.redirect('/');
   }
-
-  // Create a data object
-  const data = { name, password, email, city };
-  data.role = 'user';
-  res
-    .status(200)
-    .json({
-      message: 'success',
-      data: data,
-    })
-    .redirect('/sign_up_test');
 });
-
-app.post('/sign_up/company', (req, res) => {
-  // Destructure request body
-  const name = req.body.companyname;
-  const email = req.body.email;
-  const location = req.body.location;
-  const phone = req.body.phone;
-  const password = req.body.password;
-  const missingFields = [];
-
-  // Check for each required field and add to the array if missing
-  if (!name) missingFields.push('name');
-  if (!password) missingFields.push('password');
-  if (!email) missingFields.push('email');
-  if (!phone) missingFields.push('phone');
-
-  // If there are any missing fields, respond with a 400 status and specify which fields are missing
-  if (missingFields.length > 0) {
-    return res.status(400).json({
-      status: 'failed',
-      error: `Missing required fields: ${missingFields.join(', ')}`,
-    });
-  }
-
-  // Create a data object
-  const data = { name, password, email, location, phone };
-  data.role = 'company';
-  // console.log(data);
-
-  res
-    .status(200)
-    .json({
-      message: 'success',
-      data: data,
-    })
-    .redirect('/');
-});
-
-app.get('/sign_up_test', (req, res) => {
-  // Make sure you use the absolute path to the file
-  res.sendFile(__dirname + '/public/sign_up_test.html');
-});
-
 module.exports = app;

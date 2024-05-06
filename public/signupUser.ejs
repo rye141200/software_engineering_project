@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../css/bootstrap.css" />
+    <link rel="stylesheet" href="../css/fontawesome.css" />
+    <link rel="stylesheet" href="../css/alert.css" />
+    <link rel="shortcut icon" type="image/png" href="./../img/favicon.png" />
+    <script defer type="module" src="./../js/alert.js"></script>
+    <title>Natours | Signup</title>
+  </head>
+  <body style="background: linear-gradient(to right, #f7f7f7, #e8e8e8)">
+    <!-- Container of the form -->
+    <div class="d-flex justify-content-center align-items-center vh-100">
+      <div
+        class="container shadow-lg p-4 rounded"
+        style="max-width: 400px; background-color: white"
+      >
+        <h2 class="text-primary text-center mb-4">Sign Up</h2>
+
+        <!-- Error messages (dynamically added by JS) -->
+        <div
+          class="alert alert-danger errorMessage"
+          style="display: none"
+        ></div>
+        <!--  -->
+        <!-- Formaction="/sign_up" method="POST" -->
+        <form class="form">
+          <!-- Username -->
+          <div class="mb-3">
+            <label for="username" class="form-label"
+              >Username <i class="fa fa-user"></i
+            ></label>
+            <input
+              type="text"
+              class="form-control user-name"
+              id="username"
+              name="username"
+              required
+            />
+            <div class="valid-feedback">Looks Good</div>
+            <div class="invalid-feedback">Please choose a username</div>
+          </div>
+
+          <!-- City -->
+          <div class="mb-3">
+            <label for="city" class="form-label"
+              >City <i class="fa fa-city"></i
+            ></label>
+            <input
+              type="text"
+              name="city"
+              class="form-control user-city"
+              id="city"
+              required
+            />
+          </div>
+
+          <!-- Email -->
+          <div class="mb-3">
+            <label for="email" class="form-label"
+              >Email Address <i class="fa fa-envelope"></i
+            ></label>
+            <input
+              type="email"
+              class="form-control user-email"
+              name="email"
+              id="email"
+              required
+            />
+          </div>
+
+          <!-- Password -->
+          <div class="mb-3 position-relative">
+            <label for="password" class="form-label"
+              >Password <i class="fa fa-lock"></i
+            ></label>
+            <input
+              name="password"
+              type="password"
+              class="form-control user-password"
+              id="password"
+              required
+            />
+            <i
+              class="fa fa-eye position-absolute"
+              id="showPassword"
+              style="
+                top: 70%;
+                right: 10px;
+                transform: translateY(-50%);
+                cursor: pointer;
+              "
+            ></i>
+            <div class="valid-feedback">Looks Good</div>
+            <div class="invalid-feedback">Please enter a strong password</div>
+          </div>
+
+          <!-- Confirm Password -->
+          <div class="mb-3">
+            <label for="confirmPassword" class="form-label"
+              >Confirm Password <i class="fa fa-lock"></i
+            ></label>
+            <input
+              type="password"
+              class="form-control"
+              name="confirmPassword"
+            />
+            <i
+              class="fa-solid fa-eye position-absolute showPassword"
+              style="top: 60%; right: 2%; color: lightgray"
+              ;
+              id="showPassword"
+            ></i>
+            <div class="valid-feedback">Looks Good</div>
+            <div class="invalid-feedback">Please confirm your password</div>
+          </div>
+
+          <!-- Dropdown
+          <div class="mb-3">
+            <label for="role" class="form-label">Role</label>
+            <select class="form-select" name="Role" id="role">
+              <option value="user">User</option>
+              <option value="company">company</option>
+            </select>
+          </div> -->
+
+          <!-- Terms and Conditions -->
+          <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="terms" />
+            <label class="form-check-label" for="terms"
+              >Agree to terms and conditions</label
+            >
+            <div class="invalid-feedback">You must agree to the terms</div>
+          </div>
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary w-100">Submit</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- JavaScript files -->
+    <!-- <script src="./js/script.js"></script> -->
+    <!-- <script src="./js/bootstrap.bundle.min.js"></script> -->
+    <script type="module">
+      import { showAlert } from './../js/alert.js';
+      //! elements and variables
+      const userName = document.querySelector('.user-name');
+      const userCity = document.querySelector('.user-city');
+      const userEmail = document.querySelector('.user-email');
+      const userPassword = document.querySelector('.user-password');
+      const form = document.querySelector('form');
+      const showPassword = document.querySelector('.showPassword');
+      //! elements and variables
+
+      //! helper functions
+      const validatePassword = (password, confirmPassword) => {};
+      //! helper functions
+      form.addEventListener('submit', async (event) => {
+        // Prevent default form submission
+        event.preventDefault();
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData);
+        // Collect form data and send POST request
+        // Same as your existing code
+        let response = await fetch('/signup/user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        });
+        response = await response.json();
+        if (response.status === 'success') {
+          // Form submitted successfully
+          // Redirect the user to a new page
+          showAlert('success', 'Form submitted successfully!', 3);
+          window.location.href = '/';
+        } else if (response.status === 'failure') {
+          // Handle non-successful response
+          showAlert('error', 'Form submission failed: ' + response.message, 3);
+        }
+      });
+
+      showPassword.addEventListener('click', function () {
+        this.classList.toggle('fa-eye-slash');
+        const type =
+          password.getAttribute('type') === 'password' ? 'text' : 'password';
+        password.setAttribute('type', type);
+      });
+    </script>
+  </body>
+</html>

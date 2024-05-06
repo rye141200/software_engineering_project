@@ -1,0 +1,58 @@
+[
+  {
+    "name": "User Tour 1",
+    "difficulty": "Medium",
+    "description": "User tour description 1",
+    "location": "User Location 1",
+    "price": 200,
+    "duration": "Unknown Duration",
+    "date": "Unknown Date",
+    "stops": "Unknown Stops",
+    "capacity": "Unknown Capacity",
+    "rating": "4.9 Rating",
+    "ratingCount": "21",
+    "detailsLink": "#"
+  },
+  {
+    "name": "User Tour 1",
+    "difficulty": "Medium",
+    "description": "User tour description 1",
+    "location": "User Location 1",
+    "price": 200,
+    "duration": "Unknown Duration",
+    "date": "Unknown Date",
+    "stops": "Unknown Stops",
+    "capacity": "Unknown Capacity",
+    "rating": "4.9 Rating",
+    "ratingCount": "21",
+    "detailsLink": "#"
+  },
+  {
+    "name": "User Tour 1",
+    "difficulty": "Medium",
+    "description": "User tour description 1",
+    "location": "User Location 1",
+    "price": 200,
+    "duration": "Unknown Duration",
+    "date": "Unknown Date",
+    "stops": "Unknown Stops",
+    "capacity": "Unknown Capacity",
+    "rating": "4.9 Rating",
+    "ratingCount": "21",
+    "detailsLink": "#"
+  },
+  {
+    "name": "User Tour 1",
+    "difficulty": "Medium",
+    "description": "User tour description 1",
+    "location": "User Location 1",
+    "price": 200,
+    "duration": "Unknown Duration",
+    "date": "Unknown Date",
+    "stops": "Unknown Stops",
+    "capacity": "Unknown Capacity",
+    "rating": "4.9 Rating",
+    "ratingCount": "21",
+    "detailsLink": "#"
+  }
+]

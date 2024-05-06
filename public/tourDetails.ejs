@@ -1,0 +1,405 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" type="image/png" href="./../img/favicon.png" />
+    <link rel="stylesheet" href="./../css/styles.css"/>
+    <title>Natours | <%=tour.name%></title>
+
+    <script src="https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.js"></script>
+    <link
+      href="https://api.mapbox.com/mapbox-gl-js/v0.50.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+  <!-- Leaflet JavaScript -->
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav nav--tours">
+        <% if(user) { %>
+          <% if(user.role === 'company') { %>
+            <a href="/home" class="nav__el">All tours</a>
+            <a href="/my-tours" class="nav__el">My tours</a>
+            <a href="/new-tour" class="nav__el">Add new tour</a>
+          <% } else { %>
+            <a href="/home" class="nav__el">All tours</a>
+            <a href="/my-bookings" class="nav__el">My bookings</a>
+          <% } %>
+          
+        <% } else { %>
+          <a href="#" class="nav__el">Log in</a>
+          <a href="#" class="nav__el nav__el--cta">Sign up</a>
+        <% } %>
+      </nav>
+      <div class="header__logo">
+        <img src="./../img/logo-white.png" alt="Natours logo" />
+      </div>
+      <nav class="nav nav--user">
+        <a href="/logout" class="nav__el">Log out</a>
+        <a href="#" class="nav__el">
+          <%=user.name%>
+        </a> 
+      </nav>
+    </header>
+
+    <section class="section-header">
+      <img class="header__hero-img" src="./../img/tours/<%= tour.imageCover %>" alt="<%=tour.name%>" >
+      <div class="heading-box">
+        <h1 class="heading-primary">
+          <span
+            ><%=tour.name%> <br />
+            </span
+          >
+        </h1>
+        <div class="heading-box__group">
+          <div class="heading-box__detail">
+            <svg class="heading-box__icon">
+              <use xlink:href="./../img/icons.svg#icon-clock"></use>
+            </svg>
+            <span class="heading-box__text"><%=tour.duration%> days</span>
+          </div>
+          <div class="heading-box__detail">
+            <svg class="heading-box__icon">
+              <use xlink:href="./../img/icons.svg#icon-map-pin"></use>
+            </svg>
+            <span class="heading-box__text"><%=tour.locations[0].description%></span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-description">
+      <div class="overview-box">
+        <div>
+          <div class="overview-box__group">
+            <h2 class="heading-secondary ma-bt-lg">Quick facts</h2>
+            <div class="overview-box__detail">
+              <svg class="overview-box__icon">
+                <use xlink:href="./../img/icons.svg#icon-calendar"></use>
+              </svg>
+              <span class="overview-box__label">Next date</span>
+              <span class="overview-box__text"><%=new Date(tour.startDates[0]).toLocaleString()%></span>
+            </div>
+            <div class="overview-box__detail">
+              <svg class="overview-box__icon">
+                <use xlink:href="./../img/icons.svg#icon-trending-up"></use>
+              </svg>
+              <span class="overview-box__label">Difficulty</span>
+              <span class="overview-box__text"><%=tour.difficulty%></span>
+            </div>
+            <div class="overview-box__detail">
+              <svg class="overview-box__icon">
+                <use xlink:href="./../img/icons.svg#icon-user"></use>
+              </svg>
+              <span class="overview-box__label">Participants</span>
+              <span class="overview-box__text"><%=tour.maxGroupSize%> people</span>
+            </div>
+            <div class="overview-box__detail">
+              <svg class="overview-box__icon">
+                <use xlink:href="./../img/icons.svg#icon-star"></use>
+              </svg>
+              <span class="overview-box__label">Rating</span>
+              <span class="overview-box__text"><%=tour.rating%> / 5</span>
+            </div>
+          </div>
+
+          
+        </div>
+      </div>
+
+      <div class="description-box">
+        <h2 class="heading-secondary ma-bt-lg">About the <%=tour.name%> tour</h2>
+        <p class="description__text">
+          <%=tour.description%>
+        </p>
+      </div>
+    </section>
+
+    <section class="section-pictures">
+        <% tour.images.forEach(function(imgSrc, index) { %>
+            <div class="picture-box">
+              <img
+                class="picture-box__img picture-box__img--<%= index + 1 %>"
+                src="./../img/tours/<%= imgSrc %>"
+                alt="The Park Camper Tour <%= index + 1 %>"
+              />
+            </div>
+          <% }); %>          
+    </section>
+
+    <section class="section-map">
+      <div id="map">
+        <% tour.locations.forEach(function(location, index) { %>
+          <div class="hidden-sexy-locations" style="display:none;">
+            <% location.coordinates.forEach(function(coord, index) { %>
+              <p style="display:none;" class="coord"><%=coord%></p>
+            <% }); %>          
+            <p style="display:none;" class="day"><%=location.day%></p>
+            <p style="display:none;" class="description"><%=location.description%></p>
+          <% }); %>          
+        </div>
+      </div>
+      <script>
+        const locations = [...document.querySelectorAll(".hidden-sexy-locations")].map(location=>{
+          return [...location.children];
+        });
+        const features =locations.map(loc=>{
+            return {
+              coordinates:[parseFloat(loc[0].textContent),parseFloat(loc[1].textContent)],
+              description: `Day: ${loc[2].textContent}\n
+                ${loc[3].textContent} `,
+            }
+          });
+        var map = L.map('map').setView(features[0].coordinates, 
+        13);
+        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+          tileSize: 512,
+          zoomOffset: -1,
+          attribution: 'Map data &copy; <a href="https://www.mapbox.com/">Mapbox</a>',
+          id: "mapbox/light-v10", // Mapbox Light style ID
+          accessToken: "pk.eyJ1Ijoiam9uYXNzY2htZWR0bWFubiIsImEiOiJjam54ZmM5N3gwNjAzM3dtZDNxYTVlMnd2In0.ytpI7V7w7cyT1Kq5rT9Z1A"
+      }).addTo(map);
+        var customMarker = L.icon({
+          iconUrl: './../img/pin.png',
+          iconSize: [32, 32],
+          iconAnchor: [16, 32],
+        });
+        var marker = L.marker(features[0].coordinates,{icon:customMarker}).addTo(map);
+      </script>
+    </section>
+
+    <section class="section-reviews">
+      <div class="reviews">
+        <div class="reviews__card">
+          <div class="reviews__avatar">
+            <img
+              src="./../img/users/user-7.jpg"
+              alt="Jim Brown"
+              class="reviews__avatar-img"
+            />
+            <h6 class="reviews__user">Jim Brown</h6>
+          </div>
+          <p class="reviews__text">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque
+            dignissimos sint quo commodi corrupti accusantium veniam saepe
+            numquam.
+          </p>
+          <div class="reviews__rating">
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+          </div>
+        </div>
+
+        <div class="reviews__card">
+          <div class="reviews__avatar">
+            <img
+              src="./../img/users/user-14.jpg"
+              alt="Laura Jones"
+              class="reviews__avatar-img"
+            />
+            <h6 class="reviews__user">Laura Jones</h6>
+          </div>
+          <p class="reviews__text">
+            Veniam adipisci blanditiis, corporis sit magnam aperiam ad, fuga
+            reiciendis provident deleniti cumque similique itaque animi,
+            sapiente obcaecati beatae accusantium.
+          </p>
+          <div class="reviews__rating">
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--inactive">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+          </div>
+        </div>
+
+        <div class="reviews__card">
+          <div class="reviews__avatar">
+            <img
+              src="./../img/users/user-15.jpg"
+              alt="Ben Hadley"
+              class="reviews__avatar-img"
+            />
+            <h6 class="reviews__user">Ben Hadley</h6>
+          </div>
+          <p class="reviews__text">
+            Debitis, nesciunt itaque! At quis officia natus. Suscipit,
+            reprehenderit blanditiis mollitia distinctio ducimus porro tempore
+            perspiciatis sunt vel.
+          </p>
+          <div class="reviews__rating">
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+          </div>
+        </div>
+
+        <div class="reviews__card">
+          <div class="reviews__avatar">
+            <img
+              src="./../img/users/user-6.jpg"
+              alt="Alexander Jones"
+              class="reviews__avatar-img"
+            />
+            <h6 class="reviews__user">Alexander Jones</h6>
+          </div>
+          <p class="reviews__text">
+            Quaerat laborum eveniet ut aut maiores doloribus mollitia aperiam
+            quis praesentium sed inventore harum aliquam veritatis at adipisci
+            ea assumenda!
+          </p>
+          <div class="reviews__rating">
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+          </div>
+        </div>
+
+        <div class="reviews__card">
+          <div class="reviews__avatar">
+            <img
+              src="./../img/users/user-3.jpg"
+              alt="Ayla Cornell"
+              class="reviews__avatar-img"
+            />
+            <h6 class="reviews__user">Ayla Cornell</h6>
+          </div>
+          <p class="reviews__text">
+            Perferendis quo aliquid iste quas laboriosam molestias illo est
+            voluptatem odit ea. Vero placeat culpa provident dicta maiores!
+          </p>
+          <div class="reviews__rating">
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+            <svg class="reviews__star reviews__star--active">
+              <use xlink:href="./../img/icons.svg#icon-star"></use>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-cta">
+      <div class="cta">
+        <div class="cta__img cta__img--logo">
+          <img src="./../img/logo-white.png" alt="Natours logo" class="" />
+        </div>
+        <img src="./../img/tours/<%=tour.imageCover%>" alt="" class="cta__img cta__img--1" />
+
+        <div class="cta__content">
+          <h2 class="heading-secondary">What are you waiting for?</h2>
+          <p class="cta__text">
+            10 days. 1 adventure. Infinite memories. Make it yours today!
+          </p>
+          <button class="btn btn--green span-all-rows booking-btn">Book tour now!</button>
+          <script src="https://js.stripe.com/v3/"></script>
+          <script>
+            const stripe = Stripe("pk_test_51PCqogARUsZBFIMbV6MvtQlPy7K8Nm4AHi4nY9TGbKo8KMW05MmPrcbPjD15uUSjwXmkpfV2fdcjOegSDI1nH7Bl00YetMTMLp");
+            const bookingBtnEl = document.querySelector(".booking-btn");
+            bookingBtnEl.addEventListener('click',async (e)=>{
+              try{
+                console.log('Before the bullshit')
+                const tourName = window.location.pathname.split('/')[2]; 
+                const session = await fetch(`/book/${tourName}`,{
+                  method:"GET"
+                }).then((response)=>response.json());
+                console.log(session.session.id);
+                await stripe.redirectToCheckout({
+                  sessionId:session.session.id
+                })
+              }
+              catch(err){
+                console.log(err);
+                alert("Couldn't book tour 🧑🏿‍🦲");
+              } 
+            });
+          </script>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      <div class="footer__logo">
+        <img src="./../img/logo-green.png" alt="Natours logo" />
+      </div>
+      <ul class="footer__nav">
+        <li><a href="#">About us</a></li>
+        <li><a href="#">Download apps</a></li>
+        <li><a href="#">Become a guide</a></li>
+        <li><a href="#">Careers</a></li>
+        <li><a href="#">Contact</a></li>
+      </ul>
+      <p class="footer__copyright">
+        &copy; by Jonas Schmedtmann. All rights reserved.
+      </p>
+    </div>
+  </body>
+  
+</html>

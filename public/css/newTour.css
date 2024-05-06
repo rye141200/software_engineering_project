@@ -1,0 +1,169 @@
+/* Import Google font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+.main {
+  margin-top: 4rem !important;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 70%;
+  margin-bottom: 2rem !important;
+  background: #fff;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+input::placeholder,
+textarea::placeholder {
+  font-size: 1.5rem;
+}
+.main header {
+  font-size: 3rem;
+  color: #333;
+  font-weight: 500;
+  text-align: center;
+}
+
+.new-tour-form .address {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.new-tour-form .address .map {
+  border: 0.3rem solid #333;
+  border-radius: 1rem;
+}
+
+.container .new-tour-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.new-tour-form .input-box {
+  width: 100%;
+  margin-top: 20px;
+}
+.input-box input {
+  width: 70%;
+}
+.input-box label {
+  font-size: 2rem;
+  display: block;
+  color: #333;
+}
+.main input {
+  font-size: 2rem;
+}
+.input-box textarea {
+  width: 70%;
+  height: 7rem;
+  max-width: 70%;
+  max-height: 10rem;
+  padding: 0 10px;
+  box-sizing: border-box;
+}
+.new-tour-form :where(.input-box input, .select-box) {
+  position: relative;
+  height: 50px;
+  width: 100%;
+  outline: none;
+  font-size: 1rem;
+  color: #333;
+  margin-top: 8px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 0 15px;
+}
+.input-box input:focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+}
+.new-tour-form .column {
+  width: 100%;
+  display: flex;
+  column-gap: 15px;
+}
+.new-tour-form .difficulty-box {
+  width: 100%;
+  margin-top: 20px;
+}
+.difficulty-box h3 {
+  color: #333;
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 8px;
+}
+.new-tour-form :where(.difficulty-option, .difficulty) {
+  display: flex;
+  align-items: center;
+  column-gap: 50px;
+  flex-wrap: wrap;
+}
+.new-tour-form .difficulty {
+  column-gap: 5px;
+}
+.difficulty input {
+  width: 2rem;
+  height: 2rem;
+  accent-color: #55c57a;
+  border-radius: none;
+}
+.new-tour-form :where(.difficulty input, .difficulty label) {
+  cursor: pointer;
+}
+.difficulty label {
+  font-size: medium;
+  color: #707070;
+}
+.address :where(input, .select-box) {
+  margin-top: 15px;
+}
+.select-box select {
+  height: 100%;
+  width: 100%;
+  outline: none;
+  border: none;
+  color: #707070;
+  font-size: 1.5rem;
+}
+.new-tour-form button {
+  height: 55px;
+  width: 20%;
+  color: #fff;
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-top: 30px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: #7dd56f;
+  border-radius: 1rem;
+}
+.new-tour-form button:hover {
+  background: #55c57a;
+}
+/*Responsive*/
+@media screen and (max-width: 500px) {
+  .new-tour-form .column {
+    flex-wrap: wrap;
+  }
+  .new-tour-form :where(.difficulty-option, .difficulty) {
+    row-gap: 15px;
+  }
+}
+
+.img-bg {
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  position: relative;
+  padding-bottom: 100%;
+}

@@ -1,0 +1,140 @@
+<!doctype html>
+<!---Coding By CodingLab | www.codinglabweb.com--->
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <!--<title>Registration Form in HTML CSS</title>-->
+    <!---Custom CSS File--->
+    <link rel="stylesheet" href="./css/newTour.css" />
+    <link rel="stylesheet" href="./css/styles.css" />
+    <script defer src="./js/newTour.js"></script>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <!-- Include Mapbox CSS -->
+    <link href='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.css' rel='stylesheet' />
+    <!-- Include Mapbox JavaScript -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v2.6.1/mapbox-gl.js'></script>
+    <link rel="shortcut icon" type="image/png" href="./../img/favicon.png" />
+    <script defer type="module" src="./../js/alert.js"></script>
+    <title>Natours | Add new tours</title>
+  </head>
+  <body>
+    <header class="header">
+      <nav class="nav nav--tours">
+        <a href="/home" class="nav__el">All tours</a>
+        <form class="nav__search">
+          <button class="nav__search-btn">
+            
+          </button>
+          
+        </form>
+      </nav>
+      <div class="header__logo">
+        <img src="img/logo-white.png" alt="Natours logo" />
+      </div>
+      <nav class="nav nav--user">
+          <a href="/my-tours" class="nav__el">My tours</a>
+      </nav>
+    </header>
+
+
+    <main class="main container">
+      <header>New Tour Form</header>
+      <form class="new-tour-form">
+        <div class="input-box">
+          <label>Tour name</label>
+          <input name="name" type="text" placeholder="Enter the tour name" />
+        </div>
+
+        <div class="input-box">
+          <label>Summary</label>
+          <input type="text" placeholder="Enter brief details..." name="summary" ></input>
+        </div>
+
+        <div class="input-box">
+          <label>Description</label>
+          <textarea placeholder="Enter tour details..." name="description" ></textarea>
+        </div>
+
+        <div class="column">
+          <div class="input-box">
+            <label>Start Date</label>
+            <input type="datetime-local" placeholder="Enter start date" name="startDates" />
+          </div>
+          <div class="input-box">
+            <label>Duration</label>
+            <input type="number" placeholder="Enter duration period" min="0" name="duration" />
+          </div>
+        </div>
+        <div class="input-box image">
+          <label>Cover image</label>
+          <input type="file"  placeholder="Enter Image URL" name="imageCover" />
+        </div>
+        <div class="input-box">
+          <label>Tour images</label>
+          <input type="file"  placeholder="Enter Image URL" name="images"  multiple />
+
+        </div>
+        <div class="input-box">
+          <label>Max group size</label>
+            <input type="number" placeholder="Enter max group size" min="0" name="maxGroupSize" />
+        </div>
+        <div class="input-box price">
+          <label>Price</label>
+          <input type="number" placeholder="Enter tour price" min="0" name="price" />
+        </div>
+        <div class="difficulty-box">
+          <h3>Difficulty</h3>
+          <div class="difficulty-option">
+            <div class="difficulty">
+              <input class = "radio" type="radio"  name="difficulty" value="easy" checked />
+              <label for="check-easy">Easy</label>
+            </div>
+            <div class="difficulty">
+              <input class = "radio" type="radio"  name="difficulty" value="medium" />
+              <label for="check-medium">Medium</label>
+            </div>
+            <div class="difficulty">
+              <input class = "radio" type="radio"  name="difficulty" value="hard" />
+              <label for="check-hard">Hard</label>
+            </div>
+            <div class="difficulty">
+              <input class = "radio" type="radio"  name="difficulty" value="Elden ring" />
+              <label for="check-hard">Elden ring</label>
+            </div>
+            <div class="difficulty">
+              <input class = "radio" type="radio"  name="difficulty" value="Sekiro" />
+              <label for="check-hard">Sekiro(Not for amateurs)</label>
+            </div>
+          </div>
+        </div>
+        <div class="input-box address">
+          <label>Tour location</label>
+            <div id="map" style="height:300px;width:100%" class="map">
+              <style>
+                #map,
+                .leaflet-map-pane,
+                .leaflet-tile-pane,
+                .leaflet-shadow-pane,
+                .leaflet-overlay-pane,
+                .leaflet-marker-pane,
+                .leaflet-tooltip-pane,
+                .leaflet-popup-pane {
+                    position: relative !important;
+                }
+              </style>
+              </div>
+            </div>
+          </div>
+        <button>Submit</button>
+      </form>
+    </main>
+  </body>
+  
+
+</html>
