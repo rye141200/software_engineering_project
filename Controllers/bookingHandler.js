@@ -93,6 +93,7 @@ exports.bookTour = async (req, res) => {
       bookedTour,
     );
     exports.bookedTourID = bookedTour.id;
+    exports.sessionUserID = sessionUser.id;
     exports.tourName = tourName;
     const session = await stripeCheckout(req, res, bookedTour, loggedInUser);
 
@@ -120,6 +121,7 @@ exports.webhookCheckout = async (req, res) => {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
       const customerEmail = session.customer_email;
+      console.log(this.sessionUserID," User ID\n",this.bookedTourID,"\n Booked tour ID");
       await addTour(this.sessionUserID, this.bookedTourID);
       sendEmail(customerEmail, this.tourName, this.emailTemplate);
     }
