@@ -120,7 +120,7 @@ exports.webhookCheckout = async (req, res) => {
     if (event.type === 'checkout.session.completed') {
       const session = event.data.object;
       const customerEmail = session.customer_email;
-      addTour(this.sessionUserID, this.bookedTourID);
+      await addTour(this.sessionUserID, this.bookedTourID);
       sendEmail(customerEmail, this.tourName, this.emailTemplate);
     }
     res.status(200).json({ received: true });
