@@ -32,6 +32,7 @@ const sendEmail = (customerEmail, tourName, emailTemplate) => {
 };
 
 const addTour = async (userID, bookedTourID) => {
+  console.log("Before adding tour 🧑🏿‍🦲");
   await User.findByIdAndUpdate(
     userID,
     { $push: { tours: bookedTourID } },
