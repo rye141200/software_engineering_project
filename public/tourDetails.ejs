@@ -358,7 +358,9 @@
           <p class="cta__text">
             10 days. 1 adventure. Infinite memories. Make it yours today!
           </p>
+          <% if(user && user.role === 'user') { %>
           <button class="btn btn--green span-all-rows booking-btn">Book tour now!</button>
+          <% } %>
           <script src="https://js.stripe.com/v3/"></script>
           <script>
             const stripe = Stripe("pk_test_51PCqogARUsZBFIMbV6MvtQlPy7K8Nm4AHi4nY9TGbKo8KMW05MmPrcbPjD15uUSjwXmkpfV2fdcjOegSDI1nH7Bl00YetMTMLp");
